@@ -36,8 +36,13 @@ class JwtUtils {
         return createToken(claims, userDetails.username)
     }
 
-    fun validateToken(token: String, userDetails: UserDetails) =
-        extractUsername(token) == userDetails.username && !isTokenExpired(token)
+    fun validateToken(token: String, userDetails: UserDetails): Boolean {
+        return try {
+            extractUsername(token) == userDetails.username && !isTokenExpired(token)
+        } catch (e: Exception) {
+            false
+        }
+    }
 
     private fun createToken(claims: MutableMap<String, out Any>, subject: String): String = Jwts.builder()
         .setClaims(claims)

@@ -5,4 +5,4 @@ import ru.boringowl.myroadmap.infrastructure.jpa.JpaPost
 import ru.boringowl.myroadmap.infrastructure.jpa.JpaRoute
 import java.util.*
 
-interface RouteRepo : CrudRepository<JpaRoute, UUID>
+interface RouteRepo : CrudRepository<JpaRoute, Int>

@@ -14,11 +14,14 @@ abstract class  BaseService<D : Any, E : Any, ID : Any>(val repo: CrudRepository
         return toDto(repo.save(toJpa(dto)!!))
     }
 
+    open fun addOrUpdate(dto: D): D? {
+        return toDto(repo.save(toJpa(dto)!!))
+    }
+
     open fun update(dto: D): D? {
         require(isExists(getId(dto))) {"Запись отсутствует"}
         return toDto(repo.save(toJpa(dto)!!))
     }
-
 
     open fun delete(id: ID) {
         var entity = repo.findById(id).orElse(null)
