@@ -35,7 +35,7 @@ class SkillTodoController(val service: SkillTodoService) {
         }
     }
     @DeleteMapping("/{skillId}/{todoId}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable skillId: UUID,
         @PathVariable todoId: UUID

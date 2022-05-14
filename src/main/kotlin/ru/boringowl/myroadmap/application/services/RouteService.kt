@@ -7,8 +7,8 @@ import ru.boringowl.myroadmap.infrastructure.jpa.JpaRoute
 import java.util.*
 
 @Service
-class RouteService(val routeRepo: RouteRepo) : BaseService<Route, JpaRoute, UUID>(routeRepo) {
+class RouteService(val routeRepo: RouteRepo) : BaseService<Route, JpaRoute, Int>(routeRepo) {
     override fun toJpa(dto: Route): JpaRoute? = JpaRoute(dto)
     override fun toDto(jpa: JpaRoute?): Route? = jpa?.toRoute()
-    override fun getId(dto: Route): UUID? = dto.routeId
+    override fun getId(dto: Route): Int? = dto.routeId
 }

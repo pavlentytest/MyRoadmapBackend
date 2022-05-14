@@ -11,7 +11,7 @@ class JpaRoute() {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "route_id")
-    var routeId: UUID? = null
+    var routeId: Int? = null
 
     @Column(name = "route_name")
     var routeName: String = ""

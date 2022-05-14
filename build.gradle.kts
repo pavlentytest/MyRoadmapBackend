@@ -30,9 +30,13 @@ dependencies {
 	implementation("javax.validation:validation-api:2.0.1.Final")
 	implementation("org.bouncycastle:bcprov-jdk15on:1.70")
 	implementation("org.hibernate.validator:hibernate-validator:7.0.1.Final")
-
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1")
+
+	implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+	implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
+
+	implementation("com.google.code.gson:gson:2.8.8")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")

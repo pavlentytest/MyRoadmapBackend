@@ -36,7 +36,7 @@ class PostController(val service: PostService) {
 
     }
     @DeleteMapping("/{id}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: UUID
     ): ResponseEntity<String> {

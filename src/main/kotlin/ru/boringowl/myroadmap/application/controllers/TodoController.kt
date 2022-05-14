@@ -36,7 +36,7 @@ class TodoController(val service: TodoService) {
 
     }
     @DeleteMapping("/{id}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: UUID
     ): ResponseEntity<String> {
