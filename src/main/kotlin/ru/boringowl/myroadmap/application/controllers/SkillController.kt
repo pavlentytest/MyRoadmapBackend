@@ -49,9 +49,9 @@ class SkillController(val service: SkillService) {
     }
 
 
-    @GetMapping
-    fun get(): ListResponse<Skill> =
-        ListResponse(service.get())
+    @GetMapping("/route/{id}")
+    fun get(@PathVariable id: Int): ListResponse<Skill> =
+        ListResponse(service.getByRouteId(id))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Skill =
