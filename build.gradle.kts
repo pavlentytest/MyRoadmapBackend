@@ -35,7 +35,7 @@ dependencies {
 
 	implementation("com.github.kittinunf.fuel:fuel:2.3.1")
 	implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
-
+	implementation("org.jsoup:jsoup:1.10.3")
 	implementation("com.google.code.gson:gson:2.8.8")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
