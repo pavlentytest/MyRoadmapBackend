@@ -38,7 +38,7 @@ object MathUtils {
 }
 
 
-fun HashMap<String, Int>.getSimilarityAndKey(key: String): Pair<Double, String?> {
+fun HashMap<String, Int>.getMostSimilar(key: String): String? {
     var maxSimilar = 0.0
     var maxSimilarKey: String? = null
     this.forEach { k, v ->
@@ -48,5 +48,12 @@ fun HashMap<String, Int>.getSimilarityAndKey(key: String): Pair<Double, String?>
             maxSimilarKey = k
         }
     }
-    return Pair(maxSimilar, maxSimilarKey)
+    return if (maxSimilar > 0.7 && !exclusionWords.contains(key))
+        maxSimilarKey
+    else
+        null
 }
+
+val exclusionWords = arrayListOf(
+    "android", "ios", "swift",
+)

@@ -16,6 +16,9 @@ class JpaSkill() {
     @Column(name = "skill_name")
     var skillName: String = ""
 
+    @Column(name = "necessity")
+    var necessity: Int = 0
+
     @ManyToOne
     var route: JpaRoute? = null
 
@@ -24,12 +27,14 @@ class JpaSkill() {
     constructor(skill: Skill) : this() {
         skillId = skill.skillId
         skillName = skill.skillName
+        necessity = skill.necessity
         route = skill.route?.let { JpaRoute(it) }
     }
 
-    fun toSkill() = Skill().also {
+    fun toSkill(needRoute: Boolean = true) = Skill().also {
         it.skillId = skillId
         it.skillName = skillName
-        it.route = route?.toRoute()
+        it.necessity = necessity
+        if (needRoute) it.route = route?.toRoute()
     }
 }
