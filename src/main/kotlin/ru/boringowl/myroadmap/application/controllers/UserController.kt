@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController
 import ru.boringowl.myroadmap.application.dto.LoginData
 import ru.boringowl.myroadmap.application.dto.RegisterData
 import ru.boringowl.myroadmap.application.dto.UserTokenData
-import ru.boringowl.myroadmap.application.services.PostService
 import ru.boringowl.myroadmap.application.services.UserService
 import ru.boringowl.myroadmap.infrastructure.security.JwtUtils
 import ru.boringowl.myroadmap.infrastructure.security.UserDetailsService
@@ -18,7 +17,6 @@ import ru.boringowl.myroadmap.infrastructure.security.UserDetailsService
 @RestController
 @RequestMapping("/auth")
 class UserController(
-    val service: PostService,
     private val authenticationManager: AuthenticationManager,
     private val jwtUtils: JwtUtils,
     private val userDetailsService: UserDetailsService,

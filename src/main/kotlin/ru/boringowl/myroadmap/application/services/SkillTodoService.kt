@@ -1,12 +1,8 @@
 package ru.boringowl.myroadmap.application.services
 
-import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.*
-import ru.boringowl.myroadmap.domain.Post
-import ru.boringowl.myroadmap.domain.Route
 import ru.boringowl.myroadmap.domain.SkillTodo
-import ru.boringowl.myroadmap.domain.User
 import ru.boringowl.myroadmap.infrastructure.jpa.*
 import java.util.*
 
