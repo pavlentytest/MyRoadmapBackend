@@ -1,8 +1,6 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import ru.boringowl.myroadmap.domain.Post
 import ru.boringowl.myroadmap.domain.Route
-import java.util.*
 import javax.persistence.*
 
 @Entity

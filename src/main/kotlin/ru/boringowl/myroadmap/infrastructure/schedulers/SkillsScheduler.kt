@@ -37,9 +37,7 @@ class SkillsScheduler(val routeService: RouteService,
         val routes = routeService.get()
         routes.forEach { route ->
             val skills = getSkillsForRoute(route.routeName)
-            println("ROUTE :::::::::::::: ${route.routeName}")
             skills.forEach {
-                println("SKILL :: ${it.key}")
                 skillService.saveByNameAndRoute(
                     Skill().apply {
                         this.route = route
