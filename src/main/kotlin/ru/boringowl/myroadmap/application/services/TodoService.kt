@@ -8,7 +8,7 @@ import ru.boringowl.myroadmap.infrastructure.jpa.JpaTodo
 import java.util.*
 
 @Service
-class TodoService(val todoRepo: TodoRepo, val skillTodoService: SkillTodoService, val skillService: SkillService, val userService: UserService) : BaseService<Todo, JpaTodo, UUID>(todoRepo) {
+class TodoService(val todoRepo: TodoRepo,  val skillService: SkillService, val userService: UserService) : BaseService<Todo, JpaTodo, UUID>(todoRepo) {
     override fun toJpa(dto: Todo): JpaTodo? = JpaTodo(dto)
     override fun toDto(jpa: JpaTodo?): Todo? = jpa?.toTodo()
     override fun getId(dto: Todo): UUID? = dto.todoId
@@ -25,5 +25,10 @@ class TodoService(val todoRepo: TodoRepo, val skillTodoService: SkillTodoService
             it.skill?.route = null
         }
         return saved
+    }
+    fun get(username: String): List<Todo> {
+        val userId = userService.get(username).userId
+        require(userId != null) { "Пользователь не существует" }
+        return todoRepo.findAllByUser_UserId(userId).map { it.toTodo() }
     }
 }

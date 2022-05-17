@@ -22,4 +22,10 @@ class SkillTodoService(
         skillTodoRepo.deleteBySkill_SkillIdAndTodo_TodoId(skillId, todoId)
     }
 
+    fun update(id: UUID, progress: Int): SkillTodo? {
+        val st = skillTodoRepo.findById(id).orElse(null)
+        st.progress = progress
+        return toDto(skillTodoRepo.save(st))
+    }
+
 }
