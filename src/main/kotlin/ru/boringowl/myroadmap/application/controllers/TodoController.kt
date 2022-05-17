@@ -53,8 +53,10 @@ class TodoController(val service: TodoService, val jwtUtils: JwtUtils) {
 
 
     @GetMapping
-    fun get(): ListResponse<Todo> =
-        ListResponse(service.get())
+    fun get(@RequestHeader("Authorization") token: String): ListResponse<Todo> {
+        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+        return ListResponse(service.get(username))
+    }
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Todo =
