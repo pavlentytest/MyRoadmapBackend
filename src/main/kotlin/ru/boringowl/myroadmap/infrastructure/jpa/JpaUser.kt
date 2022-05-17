@@ -36,5 +36,5 @@ class JpaUser() {
         role = user.role
     }
 
-    fun toUser() = User(userId, username, email, role, password)
+    fun toUser() = User(userId, username, email, role)
 }

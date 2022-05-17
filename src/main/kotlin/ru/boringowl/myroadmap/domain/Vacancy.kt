@@ -3,6 +3,9 @@ package ru.boringowl.myroadmap.domain
 import java.util.*
 
 
+import com.fasterxml.jackson.annotation.JsonInclude
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class Vacancy {
     var vacancyId: Int? = null
     var vacancyName: String = ""

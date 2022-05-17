@@ -1,5 +1,6 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import ru.boringowl.myroadmap.domain.Route
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*
@@ -31,10 +32,10 @@ class JpaSkill() {
         route = skill.route?.let { JpaRoute(it) }
     }
 
-    fun toSkill(needRoute: Boolean = true) = Skill().also {
+    fun toSkill(short: Boolean = false) = Skill().also {
         it.skillId = skillId
         it.skillName = skillName
         it.necessity = necessity
-        if (needRoute) it.route = route?.toRoute()
+        if (!short) it.route = route?.toRoute()
     }
 }

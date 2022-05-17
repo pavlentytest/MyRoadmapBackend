@@ -6,19 +6,22 @@ import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
 import ru.boringowl.myroadmap.application.services.TodoService
 import ru.boringowl.myroadmap.domain.Todo
+import ru.boringowl.myroadmap.infrastructure.security.JwtUtils
 import java.util.*
 
 @RestController
 @RequestMapping("api/todo")
-class TodoController(val service: TodoService) {
+class TodoController(val service: TodoService, val jwtUtils: JwtUtils) {
 
-    @PostMapping
+    @PostMapping("/{id}")
     fun add(
         @RequestHeader("Authorization") token: String,
-        @RequestBody dto: Todo
+        @PathVariable id: Int,
+        @RequestParam name: String,
     ): Todo? {
-        try {
-            return service.add(dto)
+        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+        return service.addByRoute(id, name, username)
+         try {
         } catch (e: Exception) {
             throw ExcepUtils.exists
         }
