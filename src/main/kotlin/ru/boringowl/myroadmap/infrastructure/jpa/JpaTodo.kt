@@ -1,6 +1,5 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import ru.boringowl.myroadmap.domain.SkillTodo
 import ru.boringowl.myroadmap.domain.Todo
 import javax.persistence.Entity
 import javax.persistence.Table
@@ -22,17 +21,28 @@ class JpaTodo() {
     @ManyToOne
     var user: JpaUser? = null
 
+    @OneToMany(fetch = FetchType.EAGER, cascade= [CascadeType.ALL])
+    @JoinColumn(name="todo_id")
+    var skills: List<JpaSkillTodo>? = listOf()
 
 
-    constructor(todo: Todo) : this() {
+
+    constructor(todo: Todo, skillsNeeded: Boolean = true) : this() {
         todoId = todo.todoId
         header = todo.header
         user = todo.user?.let { JpaUser(it) }
+        if (skillsNeeded)
+        skills = todo.skills?.map {
+            JpaSkillTodo(it)
+        }
     }
 
     fun toTodo() = Todo().also {
         it.todoId = todoId
         it.header = header
-        it.user = user?.toUser()
+//        it.user = user?.toUser()
+        it.skills = skills?.map {s ->
+            s.toSkillTodo(true)
+        }
     }
 }

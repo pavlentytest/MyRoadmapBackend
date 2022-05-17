@@ -11,32 +11,15 @@ class SkillTodoService(
     val skillTodoRepo: SkillTodoRepo,
     val skillRepo: SkillRepo,
     val todoRepo: TodoRepo,
-) : BaseService<SkillTodo, JpaSkillTodo, JpaSkillTodoId>(skillTodoRepo) {
+) : BaseService<SkillTodo, JpaSkillTodo, UUID>(skillTodoRepo) {
     override fun toJpa(dto: SkillTodo): JpaSkillTodo? = JpaSkillTodo(dto)
     override fun toDto(jpa: JpaSkillTodo?): SkillTodo? = jpa?.toSkillTodo()
-    override fun getId(dto: SkillTodo): JpaSkillTodoId? =
-        JpaSkillTodoId().apply {
-            skill = dto.skill?.let { JpaSkill(it) }
-            todo = dto.todo?.let { JpaTodo(it) }
-        }
+    override fun getId(dto: SkillTodo): UUID? = dto.skillTodoId
     fun get(skillId: UUID, todoId: UUID) : SkillTodo? {
-        val s = skillRepo.findById(skillId)
-        val t = todoRepo.findById(todoId)
-        require(s.isPresent && t.isPresent) { "Запись не найдена" }
-        val st = JpaSkillTodoId().apply {
-            skill = s.get()
-            todo = t.get()
-        }
-        return skillTodoRepo.findById(st).orElse(null)?.toSkillTodo()
+        return skillTodoRepo.findBySkill_SkillIdAndTodo_TodoId(skillId, todoId)?.toSkillTodo()
     }
     fun delete(skillId: UUID, todoId: UUID) {
-        val s = skillRepo.findById(skillId)
-        val t = todoRepo.findById(todoId)
-        require(s.isPresent && t.isPresent) { "Данные не валидны" }
-        val st = JpaSkillTodoId().apply {
-            skill = s.get()
-            todo = t.get()
-        }
-        skillTodoRepo.deleteById(st)
+        skillTodoRepo.deleteBySkill_SkillIdAndTodo_TodoId(skillId, todoId)
     }
+
 }

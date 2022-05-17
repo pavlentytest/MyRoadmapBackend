@@ -1,6 +1,5 @@
 package ru.boringowl.myroadmap.application.controllers
 
-import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.PostMapping
@@ -27,7 +26,7 @@ class UserController(
     fun auth(
         @RequestBody
         credentials: LoginData,
-    ): ResponseEntity<UserTokenData> {
+    ): UserTokenData {
         val username = credentials.username
         val password = credentials.password
         val authentication = UsernamePasswordAuthenticationToken(username, password)
@@ -35,19 +34,16 @@ class UserController(
 
         val userDetails = userDetailsService.loadUserByUsername(username)
         val token = jwtUtils.generateToken(userDetails)
-        val tokenData = UserTokenData(token)
-        return ResponseEntity.ok(tokenData)
+        return UserTokenData(token)
     }
 
     @PostMapping("register")
     fun register(
         @RequestBody
         userData: RegisterData,
-    ): ResponseEntity<UserTokenData> {
-
-        val user = userService.add(userData)
-
-        val credentials = LoginData(user.username, user.password)
+    ): UserTokenData {
+        userService.add(userData)
+        val credentials = LoginData(userData.username, userData.password)
         return auth(credentials)
     }
 

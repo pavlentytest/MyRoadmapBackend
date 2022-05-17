@@ -3,7 +3,9 @@ package ru.boringowl.myroadmap.domain
 import java.time.LocalDateTime
 import java.util.*
 
+import com.fasterxml.jackson.annotation.JsonInclude
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class Hackathon {
     var hackId: UUID? = null
     var hackTitle: String = ""
