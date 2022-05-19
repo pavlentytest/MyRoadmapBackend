@@ -31,7 +31,6 @@ class HackathonScheduler(val service: HackathonService) {
     )
 
     @Scheduled(
-        initialDelay = Constants.millisecondsInDay,
         fixedDelay  = Constants.millisecondsIn7Days
     )
     fun updateHackathons() {

@@ -24,7 +24,6 @@ class SkillsScheduler(val routeService: RouteService,
 
 
     @Scheduled(
-        initialDelay = Constants.millisecondsInDay,
         fixedDelay  = Constants.millisecondsIn7Days
     )
     fun updateSkills() {
