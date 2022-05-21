@@ -60,9 +60,9 @@ class SkillTodoController(val service: SkillTodoService) {
     }
 
 
-    @GetMapping
-    fun get(): ListResponse<SkillTodo> =
-        ListResponse(service.get())
+    @GetMapping("/{todoId}")
+    fun get(@PathVariable todoId: UUID): ListResponse<SkillTodo> =
+        ListResponse(service.getByTodo(todoId))
 
     @GetMapping("/{skillId}/{todoId}")
     fun get(

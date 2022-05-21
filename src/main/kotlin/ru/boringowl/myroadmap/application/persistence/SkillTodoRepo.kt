@@ -9,5 +9,6 @@ import java.util.*
 interface SkillTodoRepo : CrudRepository<JpaSkillTodo, UUID> {
     fun findBySkill_SkillIdAndTodo_TodoId(skillId: UUID, todoId: UUID): JpaSkillTodo?
     fun deleteBySkill_SkillIdAndTodo_TodoId(skillId: UUID, todoId: UUID)
+    fun findAllByTodo_TodoId(todoId: UUID): List<JpaSkillTodo>
 }
 
