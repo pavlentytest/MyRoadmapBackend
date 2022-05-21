@@ -5,7 +5,11 @@ import kotlinx.coroutines.GlobalScope
 import org.springframework.boot.SpringBootConfiguration
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.mail.javamail.JavaMailSenderImpl
 import org.springframework.scheduling.annotation.EnableScheduling
+import java.util.*
+
 
 class AppCoroutineScope : CoroutineScope by GlobalScope
 
@@ -15,5 +19,6 @@ class AppCoroutineScope : CoroutineScope by GlobalScope
 class SpringConfig {
     @Bean
     fun scope(): AppCoroutineScope = AppCoroutineScope()
+
 }
 
