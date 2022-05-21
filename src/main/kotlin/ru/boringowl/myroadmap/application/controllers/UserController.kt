@@ -2,14 +2,12 @@ package ru.boringowl.myroadmap.application.controllers
 
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.LoginData
 import ru.boringowl.myroadmap.application.dto.RegisterData
 import ru.boringowl.myroadmap.application.dto.UserTokenData
 import ru.boringowl.myroadmap.application.services.UserService
+import ru.boringowl.myroadmap.domain.User
 import ru.boringowl.myroadmap.infrastructure.security.JwtUtils
 import ru.boringowl.myroadmap.infrastructure.security.UserDetailsService
 
@@ -45,6 +43,13 @@ class UserController(
         userService.add(userData)
         val credentials = LoginData(userData.username, userData.password)
         return auth(credentials)
+    }
+    @GetMapping
+    fun me(
+        @RequestHeader("Authorization") token: String,
+    ): User {
+        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+        return userService.get(username)
     }
 
 }
