@@ -50,8 +50,11 @@ class HackathonController(val service: HackathonService) {
 
 
     @GetMapping
-    fun get(): ListResponse<Hackathon> =
-        ListResponse(service.get())
+    fun get(
+        @RequestParam page: Int = 1,
+        @RequestParam perPage: Int = 20,
+    ): ListResponse<Hackathon> =
+        ListResponse(service.get(page, perPage))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Hackathon =

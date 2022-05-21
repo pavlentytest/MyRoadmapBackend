@@ -14,7 +14,6 @@ class RoutesScheduler(val routeService: RouteService, val scope: AppCoroutineSco
 
 
     @Scheduled(
-        initialDelay = Constants.millisecondsInDay,
         fixedDelay  = Constants.millisecondsIn7Days
     )
     fun updateRouteInfo() {

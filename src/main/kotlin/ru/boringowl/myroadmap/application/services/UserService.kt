@@ -36,7 +36,16 @@ class UserService(
         val user: JpaUser? = userRepo.findById(id).orElse(null)
         require(user != null && user.password == passwordEncoder.encode(data.oldPassword)) {"Пароли не совпадают"}
         user.apply {
-            this.password = data.newPassword
+            this.password = passwordEncoder.encode(data.newPassword)
+        }
+        userRepo.save(user)
+    }
+
+    fun setUserPassword(id: UUID, password: String) {
+        val user: JpaUser? = userRepo.findById(id).orElse(null)
+        require(user != null) {"Пользователь не найден"}
+        user.apply {
+            this.password = passwordEncoder.encode(password)
         }
         userRepo.save(user)
     }
