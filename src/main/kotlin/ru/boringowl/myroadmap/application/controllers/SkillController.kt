@@ -50,8 +50,11 @@ class SkillController(val service: SkillService) {
 
 
     @GetMapping("/route/{id}")
-    fun get(@PathVariable id: Int): ListResponse<Skill> =
-        ListResponse(service.getByRouteId(id))
+    fun get(@PathVariable id: Int,
+            @RequestParam page: Int = 1,
+            @RequestParam perPage: Int = 20
+    ): ListResponse<Skill> =
+        ListResponse(service.getByRouteId(id, page, perPage))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Skill =
