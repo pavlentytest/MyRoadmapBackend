@@ -60,18 +60,22 @@ class UserController(
     fun resetPassword(
         @RequestBody userData: ResetPasswordData,
     ): ResponseEntity<String> {
-        val user = userService.get(userData.username)
-        require(user.email == userData.email) {"Почта и имя пользователя не совпадают"}
-        val newPass = getRandPassword(14)
-        userService.setUserPassword(user.userId!!, newPass)
-        mailService.send(
-            EmailRequest(
-                user.email,
-                "Восстановление пароля",
-                "Установлен пароль: $newPass\nВам необходимо зайти и поменять его в профиле."
+        try {
+            val user = userService.get(userData.username)
+            require(user.email == userData.email) {"Почта и имя пользователя не совпадают"}
+            val newPass = getRandPassword(14)
+            userService.setUserPassword(user.userId!!, newPass)
+            mailService.send(
+                EmailRequest(
+                    user.email,
+                    "Восстановление пароля",
+                    "Установлен пароль: $newPass\nВам необходимо зайти и поменять его в профиле."
+                )
             )
-        )
-        return ResponseEntity.ok("Запрос отправлен на почту")
+            return ResponseEntity.ok("Запрос отправлен на почту")
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
+        }
     }
 
     @GetMapping
