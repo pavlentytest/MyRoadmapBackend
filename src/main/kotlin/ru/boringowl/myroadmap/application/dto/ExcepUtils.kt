@@ -11,7 +11,7 @@ object ExcepUtils {
     val unauthorized = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is not passed or is not valid")
     val exists = ResponseStatusException(HttpStatus.BAD_REQUEST, "Record with this id already exists")
     val userExists = ResponseStatusException(HttpStatus.BAD_REQUEST, "User with that username already exists")
-
+    fun custom(message: String) = ResponseStatusException(HttpStatus.BAD_REQUEST, message)
 }
 
 class ExcepResponse(val status: HttpStatus, val message: String) {

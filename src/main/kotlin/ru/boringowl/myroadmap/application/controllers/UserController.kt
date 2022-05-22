@@ -4,10 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.web.bind.annotation.*
-import ru.boringowl.myroadmap.application.dto.LoginData
-import ru.boringowl.myroadmap.application.dto.RegisterData
-import ru.boringowl.myroadmap.application.dto.ResetPasswordData
-import ru.boringowl.myroadmap.application.dto.UserTokenData
+import ru.boringowl.myroadmap.application.dto.*
 import ru.boringowl.myroadmap.application.services.UserService
 import ru.boringowl.myroadmap.domain.User
 import ru.boringowl.myroadmap.infrastructure.mail.EmailNotificationService
@@ -31,14 +28,18 @@ class UserController(
         @RequestBody
         credentials: LoginData,
     ): UserTokenData {
-        val username = credentials.username
-        val password = credentials.password
-        val authentication = UsernamePasswordAuthenticationToken(username, password)
-        authenticationManager.authenticate(authentication)
+        try {
+            val username = credentials.username
+            val password = credentials.password
+            val authentication = UsernamePasswordAuthenticationToken(username, password)
+            authenticationManager.authenticate(authentication)
 
-        val userDetails = userDetailsService.loadUserByUsername(username)
-        val token = jwtUtils.generateToken(userDetails)
-        return UserTokenData(token)
+            val userDetails = userDetailsService.loadUserByUsername(username)
+            val token = jwtUtils.generateToken(userDetails)
+            return UserTokenData(token)
+        } catch (e: Exception) {
+            throw ExcepUtils.unauthorized
+        }
     }
 
     @PostMapping("register")
@@ -46,9 +47,13 @@ class UserController(
         @RequestBody
         userData: RegisterData,
     ): UserTokenData {
-        userService.add(userData)
-        val credentials = LoginData(userData.username, userData.password)
-        return auth(credentials)
+        try {
+            userService.add(userData)
+            val credentials = LoginData(userData.username, userData.password)
+            return auth(credentials)
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
+        }
     }
 
     @PostMapping("resetPassword")
@@ -73,8 +78,14 @@ class UserController(
     fun me(
         @RequestHeader("Authorization") token: String,
     ): User {
-        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
-        return userService.get(username)
+        try {
+            val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+            return userService.get(username)
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
+        } catch (e: Exception) {
+            throw ExcepUtils.unauthorized
+        }
     }
 
 }

@@ -19,11 +19,13 @@ class TodoController(val service: TodoService, val jwtUtils: JwtUtils) {
         @PathVariable id: Int,
         @RequestParam name: String,
     ): Todo? {
-        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
-        return service.addByRoute(id, name, username)
-         try {
+        try {
+            val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+             return service.addByRoute(id, name, username)
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
         } catch (e: Exception) {
-            throw ExcepUtils.exists
+            throw ExcepUtils.unauthorized
         }
     }
     @RequestMapping( method = [RequestMethod.PATCH, RequestMethod.PUT])
