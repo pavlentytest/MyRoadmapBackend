@@ -16,7 +16,7 @@ class RestResponseEntityExceptionHandler : ResponseEntityExceptionHandler() {
         ex: ResponseStatusException?, request: WebRequest?
     ): ResponseEntity<Any> {
         return handleExceptionInternal(
-            ex!!, ex.message,
+            ex!!, ex.reason,
             HttpHeaders(), ex.status, request!!
         )
     }
