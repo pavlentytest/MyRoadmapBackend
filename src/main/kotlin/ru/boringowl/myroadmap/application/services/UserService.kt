@@ -24,6 +24,7 @@ class UserService(
 
     fun add(data: RegisterData): User {
         require(!hasUser(data.username)) {"Пользователь с таким именем уже присутствует"}
+        require(!hasEmail(data.email)) {"Пользователь с таким email уже присутствует"}
         StringUtils.checkUserInfo(data.username, data.password, data.email)
         val user = JpaUser().apply {
             this.username = data.username
@@ -68,4 +69,5 @@ class UserService(
     }
 
     fun hasUser(username: String): Boolean = userRepo.existsByUsername(username)
+    fun hasEmail(email: String): Boolean = userRepo.existsByEmail(email)
 }

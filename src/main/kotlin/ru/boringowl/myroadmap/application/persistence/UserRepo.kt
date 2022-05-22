@@ -7,5 +7,6 @@ import java.util.*
 interface UserRepo : CrudRepository<JpaUser, UUID> {
     fun findByUsername(username: String) : JpaUser?
     fun existsByUsername(username: String) : Boolean
+    fun existsByEmail(email: String) : Boolean
 }
 
