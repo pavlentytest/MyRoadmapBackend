@@ -38,7 +38,7 @@ class UserController(
             val token = jwtUtils.generateToken(userDetails)
             return UserTokenData(token)
         } catch (e: Exception) {
-            throw ExcepUtils.unauthorized
+            throw ExcepUtils.invalidCreds
         }
     }
 

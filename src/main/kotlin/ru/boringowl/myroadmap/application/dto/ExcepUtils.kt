@@ -6,6 +6,7 @@ import org.springframework.web.server.ResponseStatusException
 
 object ExcepUtils {
 
+    val invalidCreds = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Неверные имя пользователя или пароль")
     val notFound = ResponseStatusException(HttpStatus.NOT_FOUND, "Запись не найдена")
     val forbidden = ResponseStatusException(HttpStatus.FORBIDDEN, "Нет доступа")
     val unauthorized = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Токен не валиден")
