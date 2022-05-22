@@ -24,15 +24,15 @@ class JwtRequestFilter(
         filterChain: FilterChain,
     ) {
         val header: String? = request.getHeader(HttpHeaders.AUTHORIZATION)
-        try {
+        run {
             val prefix = "Bearer "
-            if (header.isNullOrEmpty() || !header.startsWith(prefix)) throw Exception()
+            if (header.isNullOrEmpty() || !header.startsWith(prefix)) return@run
 
             val token = header.substringAfter(prefix)
             val username = jwtUtils.extractUsername(token)
             val role = jwtUtils.extractRole(token)
             val userDetails = userDetailsService.loadUserByUsername(username)
-            if (!jwtUtils.validateToken(token, userDetails)) throw Exception()
+            if (!jwtUtils.validateToken(token, userDetails)) return@run
 
             val authentication = UsernamePasswordAuthenticationToken(
                 userDetails,
@@ -44,8 +44,6 @@ class JwtRequestFilter(
             )
             authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
             SecurityContextHolder.getContext().authentication = authentication
-        } catch (e: Exception) {
-            response.status = HttpServletResponse.SC_UNAUTHORIZED
         }
         filterChain.doFilter(request, response)
     }
