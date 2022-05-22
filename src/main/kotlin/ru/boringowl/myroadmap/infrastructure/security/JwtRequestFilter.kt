@@ -44,9 +44,9 @@ class JwtRequestFilter(
             )
             authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
             SecurityContextHolder.getContext().authentication = authentication
-            filterChain.doFilter(request, response)
         } catch (e: Exception) {
             response.status = HttpServletResponse.SC_UNAUTHORIZED
         }
+        filterChain.doFilter(request, response)
     }
 }
