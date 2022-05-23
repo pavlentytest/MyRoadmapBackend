@@ -14,8 +14,9 @@ class HackathonService(val hackathonRepo: HackathonRepo) : BaseService<Hackathon
     override fun getId(dto: Hackathon): UUID? = dto.hackId
 
     fun existsBySourceAndDate(source: String, date: String?): Boolean = hackathonRepo.existsBySourceAndDate(source, date)
-    fun get(page: Int, perPage: Int): List<Hackathon> {
+    fun get(page: Int, perPage: Int): Triple<List<Hackathon>, Int?, Int?> {
         val hackathons = hackathonRepo.findAll().toList()
-        return hackathons.paginate(page, perPage).map { it.toHackathon() }
+        val res = hackathons.paginate(page, perPage)
+        return Triple(res.first.map { it.toHackathon() }, res.second, res.third)
     }
 }

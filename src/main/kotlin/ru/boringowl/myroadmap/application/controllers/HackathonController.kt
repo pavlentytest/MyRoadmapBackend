@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
+import ru.boringowl.myroadmap.application.dto.PagedResponse
 import ru.boringowl.myroadmap.application.services.HackathonService
 import ru.boringowl.myroadmap.domain.Hackathon
 import java.util.*
@@ -53,8 +54,8 @@ class HackathonController(val service: HackathonService) {
     fun get(
         @RequestParam page: Int = 1,
         @RequestParam perPage: Int = 20,
-    ): ListResponse<Hackathon> =
-        ListResponse(service.get(page, perPage))
+    ): PagedResponse<Hackathon> =
+        PagedResponse(service.get(page, perPage))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Hackathon =

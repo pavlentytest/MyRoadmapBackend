@@ -20,9 +20,9 @@ class SkillService(val skillRepo: SkillRepo) : BaseService<Skill, JpaSkill, UUID
         }
         skillRepo.save(toJpa(skill)!!)
     }
-    fun getByRouteId(id: Int, page: Int? = null, perPage: Int? = null): List<Skill> {
+    fun getByRouteId(id: Int, page: Int = 1, perPage: Int = 20, full: Boolean = false): Triple<List<Skill>, Int?, Int?> {
         val res = skillRepo.findAllByRoute_RouteId(id).map { it.toSkill(true)}
-        return if (page == null || perPage == null) res else res.paginate(page, perPage)
+        return if (full) Triple(res, null, null) else res.paginate(page, perPage)
     }
 
 

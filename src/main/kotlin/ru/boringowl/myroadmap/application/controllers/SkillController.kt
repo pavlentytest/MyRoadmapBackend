@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
+import ru.boringowl.myroadmap.application.dto.PagedResponse
 import ru.boringowl.myroadmap.application.services.SkillService
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*
@@ -53,8 +54,8 @@ class SkillController(val service: SkillService) {
     fun get(@PathVariable id: Int,
             @RequestParam page: Int = 1,
             @RequestParam perPage: Int = 20
-    ): ListResponse<Skill> =
-        ListResponse(service.getByRouteId(id, page, perPage))
+    ): PagedResponse<Skill> =
+        PagedResponse(service.getByRouteId(id, page, perPage))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Skill =
