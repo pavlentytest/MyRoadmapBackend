@@ -78,6 +78,21 @@ class UserController(
         }
     }
 
+    @PostMapping("updatePassword")
+    fun update(
+        @RequestHeader("Authorization") token: String,
+        @RequestBody userData: RestorePasswordData,
+    ): ResponseEntity<String> {
+        try {
+            val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+            val user = userService.get(username)
+            userService.updatePassword(user.userId!!, userData)
+            return ResponseEntity.ok("Пароль изменен")
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
+        }
+    }
+
     @GetMapping
     fun me(
         @RequestHeader("Authorization") token: String,
