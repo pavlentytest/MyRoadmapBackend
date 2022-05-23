@@ -53,7 +53,7 @@ class HackathonScheduler(val service: HackathonService) {
             description = d[0]
             d.forEachIndexed { j, w ->
                 if (words.keys.contains(w))
-                    data[words[w]!!] = d[j+1]
+                    data[words[w]!!] = d[j+1].trim()
             }
             save(title, description, source, img, data)
         }
