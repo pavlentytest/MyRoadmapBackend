@@ -77,13 +77,15 @@ class SkillsScheduler(val routeService: RouteService,
                 res[it.key] = it.value
         }
         val average = skills.map { it.value }.average()
-        return res
+        val a = res
             .toList()
             .filter { (_, v) -> v > 1 }
             .sortedBy { (k, v) -> v }
             .map { (k, v) -> Pair(k, (v.toDouble()/average*10).roundToInt()) }
             .reversed()
             .toMap()
+        println("PEPEGA\n$a")
+        return a
     }
 
     private fun getVacancySkills(id: String): List<String> {
