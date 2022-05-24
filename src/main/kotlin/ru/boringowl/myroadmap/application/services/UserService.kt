@@ -4,6 +4,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.dto.RegisterData
 import ru.boringowl.myroadmap.application.dto.RestorePasswordData
+import ru.boringowl.myroadmap.application.dto.UserEmailData
 import ru.boringowl.myroadmap.application.persistence.UserRepo
 import ru.boringowl.myroadmap.domain.User
 import ru.boringowl.myroadmap.domain.UserRole
@@ -39,6 +40,13 @@ class UserService(
         val user: JpaUser? = userRepo.findById(id).orElse(null)
         require(user?.password == passwordEncoder.encode(data.oldPassword)) {"Пароли не совпадают"}
         setUserPassword(id, data.newPassword)
+    }
+
+    fun update(id: UUID, data: UserEmailData) : User {
+        val user: JpaUser? = userRepo.findById(id).orElse(null)
+        require(!hasEmail(data.email)) {"Пользователь с таким email уже присутствует"}
+        user!!.email = data.email
+        return userRepo.save(user).toUser()
     }
 
     fun setUserPassword(id: UUID, password: String) {

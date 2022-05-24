@@ -79,7 +79,7 @@ class UserController(
     }
 
     @PostMapping("updatePassword")
-    fun update(
+    fun updatePassword(
         @RequestHeader("Authorization") token: String,
         @RequestBody userData: RestorePasswordData,
     ): ResponseEntity<String> {
@@ -93,6 +93,19 @@ class UserController(
         }
     }
 
+    @PutMapping
+    fun update(
+        @RequestHeader("Authorization") token: String,
+        @RequestBody userData: UserEmailData,
+    ): User {
+        try {
+            val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+            val user = userService.get(username)
+            return userService.update(user.userId!!, userData)
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
+        }
+    }
     @GetMapping
     fun me(
         @RequestHeader("Authorization") token: String,
