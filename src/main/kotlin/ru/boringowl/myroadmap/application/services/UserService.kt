@@ -44,6 +44,7 @@ class UserService(
     fun update(id: UUID, data: UserEmailData) : User {
         val user: JpaUser? = userRepo.findById(id).orElse(null)
         require(!hasEmail(data.email)) {"Пользователь с таким email уже присутствует"}
+        StringUtils.checkPassword(data.email)
         user!!.email = data.email
         return userRepo.save(user).toUser()
     }
