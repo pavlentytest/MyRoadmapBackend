@@ -39,7 +39,7 @@ class UserService(
     fun updatePassword(id: UUID, data: RestorePasswordData) {
         val user: JpaUser? = userRepo.findById(id).orElse(null)
         println(user?.password.toString())
-        println(data.oldPassword)
+        println(passwordEncoder.encode(data.oldPassword))
         require(user?.password == passwordEncoder.encode(data.oldPassword)) {"Пароли не совпадают"}
         setUserPassword(id, data.newPassword)
     }
