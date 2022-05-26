@@ -24,6 +24,13 @@ class JpaSkillTodo() {
 
     @Column(name="progress")
     var progress: Int = 0
+
+    @Column(name="binary_progress")
+    var binaryProgress: Boolean = false
+
+    @Column(name="favorite")
+    var favorite: Boolean = false
+
     @Column(columnDefinition="TEXT")
     var notes: String = ""
 
@@ -35,6 +42,8 @@ class JpaSkillTodo() {
         notes = skillTodo.notes
         skillName = skillTodo.skillName
         manualName = skillTodo.manualName
+        binaryProgress = skillTodo.binaryProgress
+        favorite = skillTodo.favorite
         todo = skillTodo.todo?.let { JpaTodo(it, false) }
     }
 
@@ -44,6 +53,8 @@ class JpaSkillTodo() {
         it.notes = notes
         it.skillName = skillName
         it.manualName = manualName
+        it.binaryProgress = binaryProgress
+        it.favorite = favorite
     }
 }
 

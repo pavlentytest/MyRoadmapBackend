@@ -13,5 +13,7 @@ class SkillTodo {
     var manualName: String = ""
     var todo: Todo? = null
     var progress: Int = 0
+    var binaryProgress: Boolean = false
+    var favorite: Boolean = false
     var notes: String = ""
 }
