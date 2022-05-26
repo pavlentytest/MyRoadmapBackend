@@ -5,16 +5,18 @@ import java.util.*
 import javax.persistence.*
 
 @Entity
-@Table(name="skill_todo", uniqueConstraints = [UniqueConstraint(columnNames = ["skill_id", "todo_id"])])
+@Table(name="skill_todo")
 class JpaSkillTodo() {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="skill_todo_id")
     var skillTodoId: UUID? = null
 
-    @ManyToOne
-    @JoinColumn(name="skill_id")
-    var skill: JpaSkill? = null
+    @Column(name="skill_name")
+    var skillName: String = ""
+
+    @Column(name="manual_name")
+    var manualName: String = ""
 
     @ManyToOne
     @JoinColumn(name="todo_id")
@@ -31,15 +33,17 @@ class JpaSkillTodo() {
         skillTodoId = skillTodo.skillTodoId
         progress = skillTodo.progress
         notes = skillTodo.notes
-        skill = skillTodo.skill?.let { JpaSkill(it) }
+        skillName = skillTodo.skillName
+        manualName = skillTodo.manualName
         todo = skillTodo.todo?.let { JpaTodo(it, false) }
     }
 
-    fun toSkillTodo(short: Boolean = false) = SkillTodo().also {
+    fun toSkillTodo() = SkillTodo().also {
         it.skillTodoId = skillTodoId
         it.progress = progress
         it.notes = notes
-        it.skill = skill?.toSkill(short)
+        it.skillName = skillName
+        it.manualName = manualName
     }
 }
 

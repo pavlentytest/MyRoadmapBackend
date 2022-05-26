@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class SkillTodo {
     var skillTodoId: UUID? = null
-    var skill: Skill? = null
+    var skillName: String = ""
+    var manualName: String = ""
     var todo: Todo? = null
     var progress: Int = 0
     var notes: String = ""

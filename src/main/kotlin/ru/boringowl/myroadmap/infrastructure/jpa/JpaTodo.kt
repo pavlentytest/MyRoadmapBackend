@@ -32,17 +32,12 @@ class JpaTodo() {
         header = todo.header
         user = todo.user?.let { JpaUser(it) }
         if (skillsNeeded)
-        skills = todo.skills?.map {
-            JpaSkillTodo(it)
-        }
+        skills = todo.skills?.map { JpaSkillTodo(it) }
     }
 
     fun toTodo() = Todo().also {
         it.todoId = todoId
         it.header = header
-//        it.user = user?.toUser()
-        it.skills = skills?.map {s ->
-            s.toSkillTodo(true)
-        }
+        it.skills = skills?.map {s -> s.toSkillTodo() }
     }
 }

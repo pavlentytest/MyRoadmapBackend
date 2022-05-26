@@ -18,13 +18,14 @@ class TodoService(val todoRepo: TodoRepo,  val skillService: SkillService, val u
         val todo = Todo().apply {
             header = name
             this.user = user
-            this.skills = skills.map { SkillTodo().apply { this.skill = it }}
+            this.skills = skills.map {
+                SkillTodo().apply {
+                    skillName = it.skillName
+                    manualName = it.skillName
+                }
+            }
         }
-        val saved = add(todo)
-        saved?.skills?.forEach {
-            it.skill?.route = null
-        }
-        return saved
+        return add(todo)
     }
     fun get(username: String): List<Todo> {
         val userId = userService.get(username).userId

@@ -84,7 +84,6 @@ class SkillsScheduler(val routeService: RouteService,
             .map { (k, v) -> Pair(k, (v.toDouble()/average*10).roundToInt()) }
             .reversed()
             .toMap()
-        println("PEPEGA\n$a")
         return a
     }
 
