@@ -15,5 +15,6 @@ class SkillTodo {
     var progress: Int = 0
     var binaryProgress: Boolean = false
     var favorite: Boolean = false
+    var necessity: Int = 0
     var notes: String = ""
 }

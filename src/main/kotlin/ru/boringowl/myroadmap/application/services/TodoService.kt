@@ -22,6 +22,7 @@ class TodoService(val todoRepo: TodoRepo,  val skillService: SkillService, val u
                 SkillTodo().apply {
                     skillName = it.skillName
                     manualName = it.skillName
+                    necessity = it.necessity
                 }
             }
         }
