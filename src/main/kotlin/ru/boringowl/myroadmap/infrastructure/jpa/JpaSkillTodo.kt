@@ -1,6 +1,7 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
 import ru.boringowl.myroadmap.domain.SkillTodo
+import ru.boringowl.myroadmap.domain.Todo
 import java.util.*
 import javax.persistence.*
 
@@ -60,6 +61,7 @@ class JpaSkillTodo() {
         it.manualName = manualName
         it.binaryProgress = binaryProgress
         it.favorite = favorite
+        it.todo = Todo(todo?.todoId)
     }
 }
 

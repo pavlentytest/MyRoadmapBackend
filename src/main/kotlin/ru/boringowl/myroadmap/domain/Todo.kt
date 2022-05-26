@@ -14,4 +14,6 @@ class Todo() {
     @JsonIgnore
     var user: User? = null
     var skills: List<SkillTodo>? = listOf()
+
+    constructor(todoId: UUID? = null) : this() { this.todoId = todoId }
 }
