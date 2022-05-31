@@ -21,7 +21,7 @@ class BooksScheduler(
     val scope: AppCoroutineScope
 ) {
 
-    @Value("vk.access_token")
+    @Value("\${vk.access_token}")
     val token = ""
     val domain = "proglib"
     val count = 100
