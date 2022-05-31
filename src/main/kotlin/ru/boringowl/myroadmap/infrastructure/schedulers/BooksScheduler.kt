@@ -35,18 +35,14 @@ class BooksScheduler(
         }
     }
     fun start() {
-        println(token)
         routeService.get().forEach {r ->
             getBooks(r.routeName).forEach {
                 if(!bookPostService.isExists(it.description))
-                    bookPostService.add(it)
+                    bookPostService.addByRoute(it, r)
             }
-
         }
-
     }
     private fun getBooks(route: String, offset: Int = 0): ArrayList<BookPost> {
-        println("$route: $offset")
         val books = arrayListOf<BookPost>()
         var responseCount: Int? = null
         val link = "https://api.vk.com/method/wall.search?" +
