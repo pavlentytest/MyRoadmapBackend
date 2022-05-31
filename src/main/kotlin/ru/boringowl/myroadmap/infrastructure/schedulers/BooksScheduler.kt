@@ -35,6 +35,7 @@ class BooksScheduler(
         }
     }
     fun start() {
+        println(token)
         routeService.get().forEach {r ->
             getBooks(r.routeName).forEach {
                 if(!bookPostService.isExists(it.description))
