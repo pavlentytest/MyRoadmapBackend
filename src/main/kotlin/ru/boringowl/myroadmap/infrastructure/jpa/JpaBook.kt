@@ -12,15 +12,16 @@ class JpaBookPost(
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_post_id")
     var bookPostId: UUID? = null,
-    @Column(columnDefinition="TEXT", name = "hack_title")
+    @Column(columnDefinition="TEXT", name = "book_description")
     var description: String = "",
     @OneToMany(fetch = FetchType.EAGER, cascade= [CascadeType.ALL])
     var books: List<JpaBookInfo> = arrayListOf(),
     @ManyToOne
     var route: JpaRoute? = null
 ) {
-    constructor(bookPost: BookPost) : this(null, bookPost.description, bookPost.books.map { JpaBookInfo(it) })
+    constructor(bookPost: BookPost) : this(bookPost.bookPostId, bookPost.description, bookPost.books.map { JpaBookInfo(it) })
     fun toBookPost() = BookPost().also {
+        it.bookPostId = bookPostId
         it.books = books.map { b -> b.toBook() }
         it.description = description
     }
