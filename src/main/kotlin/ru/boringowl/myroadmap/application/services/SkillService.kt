@@ -1,7 +1,11 @@
 package ru.boringowl.myroadmap.application.services
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.SkillRepo
+import ru.boringowl.myroadmap.domain.BookPost
 import ru.boringowl.myroadmap.domain.Skill
 import ru.boringowl.myroadmap.infrastructure.jpa.JpaSkill
 import java.util.*
@@ -19,7 +23,7 @@ class SkillService(val skillRepo: SkillRepo) : BaseService<Skill, JpaSkill, UUID
         }
         skillRepo.save(toJpa(skill)!!)
     }
-    fun getByRouteId(id: Int): List<Skill> = skillRepo.findAllByRoute_RouteId(id).map { it.toSkill(true) }
+    fun getByRouteId(routeId: Int, pageable: Pageable = Pageable.unpaged()): Page<Skill> = skillRepo.findAllByRoute_RouteId(routeId, pageable).map { toDto(it)!! }
 
 
     override fun toJpa(dto: Skill): JpaSkill? = JpaSkill(dto)

@@ -1,5 +1,8 @@
 package ru.boringowl.myroadmap.application.services
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.*
 import ru.boringowl.myroadmap.domain.SkillTodo
@@ -15,8 +18,8 @@ class SkillTodoService(
     override fun toJpa(dto: SkillTodo): JpaSkillTodo? = JpaSkillTodo(dto)
     override fun toDto(jpa: JpaSkillTodo?): SkillTodo? = jpa?.toSkillTodo()
     override fun getId(dto: SkillTodo): UUID? = dto.skillTodoId
-    fun getByTodo(todoId: UUID) : List<SkillTodo> {
-        return skillTodoRepo.findAllByTodo_TodoId(todoId).map {it.toSkillTodo()}
+    fun getByTodo(todoId: UUID, pageable: Pageable) : Page<SkillTodo> {
+        return skillTodoRepo.findAllByTodo_TodoId(todoId, pageable).map {it.toSkillTodo()}
     }
 
     fun update(id: UUID, progress: Int): SkillTodo? {

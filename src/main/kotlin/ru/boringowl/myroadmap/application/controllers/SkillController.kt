@@ -1,5 +1,7 @@
 package ru.boringowl.myroadmap.application.controllers
 
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
@@ -50,9 +52,11 @@ class SkillController(val service: SkillService) {
 
 
     @GetMapping("/route/{id}")
-    fun get(@PathVariable id: Int
-    ): ListResponse<Skill> =
-        ListResponse(service.getByRouteId(id))
+    fun get(@PathVariable id: Int,
+            @RequestParam(defaultValue = "0") page: Int,
+            @RequestParam(defaultValue = "20") limit: Int
+    ): Page<Skill> =
+        service.getByRouteId(id, PageRequest.of(page, limit))
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Skill =

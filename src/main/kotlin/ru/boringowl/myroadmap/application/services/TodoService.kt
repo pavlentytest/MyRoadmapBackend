@@ -13,7 +13,7 @@ class TodoService(val todoRepo: TodoRepo,  val skillService: SkillService, val u
     override fun toDto(jpa: JpaTodo?): Todo? = jpa?.toTodo()
     override fun getId(dto: Todo): UUID? = dto.todoId
     fun addByRoute(routeId: Int, name: String, username: String): Todo? {
-        val skills = skillService.getByRouteId(routeId)
+        val skills = skillService.getByRouteId(routeId).toList()
         val user = userService.get(username)
         val todo = Todo().apply {
             header = name
