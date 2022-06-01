@@ -1,9 +1,12 @@
 package ru.boringowl.myroadmap.application.services
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.data.repository.CrudRepository
 
 abstract class  BaseService<D : Any, E : Any, ID : Any>(val repo: CrudRepository<E, ID>) {
     open fun get(): List<D> =
+        repo.findAll().toList().map { toDto(it)!! }
+    open fun get(pageable: PageRequest): List<D> =
         repo.findAll().toList().map { toDto(it)!! }
 
     open fun get(id: ID): D? =

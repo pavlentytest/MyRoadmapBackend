@@ -4,7 +4,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
-import ru.boringowl.myroadmap.application.dto.PagedResponse
 import ru.boringowl.myroadmap.application.services.SkillService
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*

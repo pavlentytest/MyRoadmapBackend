@@ -1,7 +1,9 @@
 package ru.boringowl.myroadmap.domain
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.util.*
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 class BookPost(
     var bookPostId: UUID? = null,
     var description: String = "",

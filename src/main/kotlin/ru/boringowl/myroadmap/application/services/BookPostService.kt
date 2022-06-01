@@ -1,5 +1,6 @@
 package ru.boringowl.myroadmap.application.services
 
+import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.BookPostRepo
 import ru.boringowl.myroadmap.domain.BookPost
@@ -21,5 +22,5 @@ class BookPostService(val bookRepo: BookPostRepo) : BaseService<BookPost, JpaBoo
         }
     }
     fun isExists(desc: String) = bookRepo.existsByDescription(desc)
-    fun getByRoute(routeId: Int) = bookRepo.findAllByRoute_RouteId(routeId).map { toDto(it)!! }
+    fun getByRoute(routeId: Int, pageable: PageRequest) = bookRepo.findAllByRoute_RouteId(routeId, pageable).map { toDto(it)!! }
 }

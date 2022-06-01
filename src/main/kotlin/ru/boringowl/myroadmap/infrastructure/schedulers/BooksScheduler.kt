@@ -37,6 +37,7 @@ class BooksScheduler(
     fun start() {
         routeService.get().forEach {r ->
             getBooks(r.routeName).forEach {
+                it.description = Regex("#.*?@proglib").replace(it.description, "").trim()
                 if(!bookPostService.isExists(it.description))
                     bookPostService.addByRoute(it, r)
             }
