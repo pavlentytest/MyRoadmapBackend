@@ -1,9 +1,9 @@
 package ru.boringowl.myroadmap.application.persistence
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.jpa.repository.JpaRepository
 import ru.boringowl.myroadmap.infrastructure.jpa.*
 import java.util.*
 
-interface BookRepo : CrudRepository<JpaBookInfo, UUID> {
+interface BookRepo : JpaRepository<JpaBookInfo, UUID> {
 }
 
