@@ -1,6 +1,7 @@
 package ru.boringowl.myroadmap.application.services
 
 import org.springframework.data.domain.Page
+import org.springframework.data.domain.PageImpl
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.HackathonRepo
@@ -18,7 +19,7 @@ class HackathonService(val hackathonRepo: HackathonRepo) : BaseService<Hackathon
         if (query.isNotEmpty())
             get(pageable)
         else
-            Page.empty<Hackathon?>().also { p-> p.content.addAll(get().filter { it.containsText(query) }) }
+            PageImpl(get().filter { it.containsText(query) })
 
     fun existsBySourceAndDate(source: String, date: String?): Boolean = hackathonRepo.existsBySourceAndDate(source, date)
 }
