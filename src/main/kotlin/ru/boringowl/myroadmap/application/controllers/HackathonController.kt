@@ -19,9 +19,10 @@ class HackathonController(val service: HackathonService) {
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "20") limit: Int,
         @RequestParam(defaultValue = "") query: String,
-    ): Page<Hackathon> =
-        service.getByQuery(PageRequest.of(page, limit), query)
-
+    ): Page<Hackathon> {
+        println(query)
+        return service.getByQuery(PageRequest.of(page, limit), query)
+    }
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Hackathon =
         service.get(id) ?: throw ExcepUtils.notFound
