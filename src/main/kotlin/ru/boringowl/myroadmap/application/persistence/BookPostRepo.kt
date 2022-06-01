@@ -10,6 +10,6 @@ interface BookPostRepo : JpaRepository<JpaBookPost, UUID> {
     fun findAllByRoute_RouteId(routeId: Int, pageRequest: Pageable): Page<JpaBookPost>
     fun existsByDescription(desc: String): Boolean
 
-    fun findAllByDescriptionContainsIgnoreCase(text: String, pageRequest: Pageable): Page<JpaBookPost>
+    fun findAllByRoute_RouteIdAndDescriptionContainsIgnoreCase(routeId: Int, text: String, pageRequest: Pageable): Page<JpaBookPost>
 }
 

@@ -11,18 +11,17 @@ import java.util.*
 @RestController
 @RequestMapping("api/books")
 class BooksController(val service: BookPostService) {
-
-
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): BookPost =
         service.get(id) ?: throw ExcepUtils.notFound
 
-    @GetMapping()
+    @GetMapping("/route/{id}")
     fun get(
+        @PathVariable id: Int,
         @RequestParam(defaultValue = "0") page: Int,
         @RequestParam(defaultValue = "20") limit: Int,
         @RequestParam(defaultValue = "") query: String,
     ): Page<BookPost> =
-        service.getByQuery(PageRequest.of(page, limit), query)
+        service.getByQuery(id, PageRequest.of(page, limit), query)
 
 }

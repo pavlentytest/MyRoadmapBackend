@@ -17,11 +17,11 @@ class BookPostService(val bookRepo: BookPostRepo) : BaseService<BookPost, JpaBoo
     override fun toDto(jpa: JpaBookPost?): BookPost? = jpa?.toBookPost()
     override fun getId(dto: BookPost): UUID? = dto.bookPostId
 
-    fun getByQuery(pageable: Pageable, query: String): Page<BookPost> =
+    fun getByQuery(id: Int, pageable: Pageable, query: String): Page<BookPost> =
         if (query.isEmpty())
-            get(pageable)
+            bookRepo.findAllByRoute_RouteId(id, pageable).map { toDto(it) }
         else
-            bookRepo.findAllByDescriptionContainsIgnoreCase(query, pageable).map { toDto(it) }
+            bookRepo.findAllByRoute_RouteIdAndDescriptionContainsIgnoreCase(id, query, pageable).map { toDto(it) }
     fun addByRoute(dto: BookPost, route: Route) {
         val jpa = toJpa(dto)
         jpa?.let {
