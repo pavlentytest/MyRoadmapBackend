@@ -17,9 +17,10 @@ class HackathonController(val service: HackathonService) {
     @GetMapping
     fun get(
         @RequestParam(defaultValue = "0") page: Int,
-        @RequestParam(defaultValue = "20") limit: Int
+        @RequestParam(defaultValue = "20") limit: Int,
+        @RequestParam(defaultValue = "") query: String,
     ): Page<Hackathon> =
-        service.get(PageRequest.of(page, limit))
+        service.getByQuery(PageRequest.of(page, limit), query)
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Hackathon =
