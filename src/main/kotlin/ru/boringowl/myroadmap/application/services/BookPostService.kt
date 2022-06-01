@@ -2,6 +2,7 @@ package ru.boringowl.myroadmap.application.services
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
+import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.BookPostRepo
 import ru.boringowl.myroadmap.domain.BookPost
@@ -15,6 +16,12 @@ class BookPostService(val bookRepo: BookPostRepo) : BaseService<BookPost, JpaBoo
     override fun toJpa(dto: BookPost): JpaBookPost? = JpaBookPost(dto)
     override fun toDto(jpa: JpaBookPost?): BookPost? = jpa?.toBookPost()
     override fun getId(dto: BookPost): UUID? = dto.bookPostId
+
+    fun getByQuery(pageable: Pageable, query: String): Page<BookPost> =
+        if (query.isEmpty())
+            get(pageable)
+        else
+            bookRepo.findAllByDescriptionContainsIgnoreCase(query).map { toDto(it) }
     fun addByRoute(dto: BookPost, route: Route) {
         val jpa = toJpa(dto)
         jpa?.let {

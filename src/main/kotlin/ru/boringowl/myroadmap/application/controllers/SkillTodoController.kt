@@ -1,10 +1,9 @@
 package ru.boringowl.myroadmap.application.controllers
 
-import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageRequest
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
+import ru.boringowl.myroadmap.application.dto.ListResponse
 import ru.boringowl.myroadmap.application.services.SkillTodoService
 import ru.boringowl.myroadmap.domain.SkillTodo
 import java.util.*
@@ -63,10 +62,8 @@ class SkillTodoController(val service: SkillTodoService) {
 
     @GetMapping("/todo/{todoId}")
     fun getByTodo(@PathVariable todoId: UUID,
-                  @RequestParam(defaultValue = "0") page: Int,
-                  @RequestParam(defaultValue = "20") limit: Int
-    ): Page<SkillTodo> =
-        service.getByTodo(todoId, PageRequest.of(page, limit))
+    ): ListResponse<SkillTodo> =
+        ListResponse(service.getByTodo(todoId))
 
     @GetMapping("/{skillTodoId}")
     fun get(

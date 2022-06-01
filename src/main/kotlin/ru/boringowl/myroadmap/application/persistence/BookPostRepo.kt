@@ -9,5 +9,7 @@ import java.util.*
 interface BookPostRepo : JpaRepository<JpaBookPost, UUID> {
     fun findAllByRoute_RouteId(routeId: Int, pageRequest: Pageable): Page<JpaBookPost>
     fun existsByDescription(desc: String): Boolean
+
+    fun findAllByDescriptionContainsIgnoreCase(text: String): Page<JpaBookPost>
 }
 
