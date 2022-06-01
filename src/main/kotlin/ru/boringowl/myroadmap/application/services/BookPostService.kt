@@ -21,7 +21,7 @@ class BookPostService(val bookRepo: BookPostRepo) : BaseService<BookPost, JpaBoo
         if (query.isEmpty())
             get(pageable)
         else
-            bookRepo.findAllByDescriptionContainsIgnoreCase(query).map { toDto(it) }
+            bookRepo.findAllByDescriptionContainsIgnoreCase(query, pageable).map { toDto(it) }
     fun addByRoute(dto: BookPost, route: Route) {
         val jpa = toJpa(dto)
         jpa?.let {
