@@ -16,7 +16,7 @@ class HackathonService(val hackathonRepo: HackathonRepo) : BaseService<Hackathon
     override fun getId(dto: Hackathon): UUID? = dto.hackId
 
     fun getByQuery(pageable: Pageable, query: String): Page<Hackathon> =
-        if (query.isNotEmpty())
+        if (query.isEmpty())
             get(pageable)
         else
             PageImpl(get().filter { it.containsText(query) })
