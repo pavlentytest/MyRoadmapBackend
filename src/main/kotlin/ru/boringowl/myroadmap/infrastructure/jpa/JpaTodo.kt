@@ -40,7 +40,7 @@ class JpaTodo() {
         it.header = header
         if (includeSkills)
             it.skills = skills?.map {s -> s.toSkillTodo() }
-        it.ready = it.skills?.sumOf {s -> s.progress } ?: 0
-        it.notReady = it.skills?.size?.times(5) ?: 0
+        it.ready = skills?.sumOf {s -> s.progress } ?: 0
+        it.full = skills?.size?.times(5) ?: 0
     }
 }
