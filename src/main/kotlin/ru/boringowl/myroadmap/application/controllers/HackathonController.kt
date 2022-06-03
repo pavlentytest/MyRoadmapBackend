@@ -2,11 +2,8 @@ package ru.boringowl.myroadmap.application.controllers
 
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.PageRequest
-import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
-import ru.boringowl.myroadmap.application.dto.ListResponse
-import ru.boringowl.myroadmap.application.dto.PagedResponse
 import ru.boringowl.myroadmap.application.services.HackathonService
 import ru.boringowl.myroadmap.domain.Hackathon
 import java.util.*

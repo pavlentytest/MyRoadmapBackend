@@ -1,9 +1,6 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
 import ru.boringowl.myroadmap.domain.Todo
-import javax.persistence.Entity
-import javax.persistence.Table
-
 import java.util.*
 import javax.persistence.*
 

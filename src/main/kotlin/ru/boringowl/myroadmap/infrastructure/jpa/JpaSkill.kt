@@ -1,7 +1,5 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import ru.boringowl.myroadmap.domain.Route
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*
 import javax.persistence.*

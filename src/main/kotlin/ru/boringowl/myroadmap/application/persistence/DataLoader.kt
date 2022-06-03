@@ -30,8 +30,8 @@ enum class Routes(val route: Route) {
     IOS(Route(9, "iOS", descriptions[8])),
     PYTHON(Route(10, "Python", descriptions[9])),
     DEVOPS(Route(11, "Devops", descriptions[10])),
-    DATA_SCIENCE(Route(13, "Data scientist", descriptions[11])),
-    FULLSTACK(Route(14, "Fullstack", descriptions[12]))
+    DATA_SCIENCE(Route(12, "Data scientist", descriptions[11])),
+    FULLSTACK(Route(13, "Fullstack", descriptions[12]))
 }
 
 val descriptions = arrayListOf(

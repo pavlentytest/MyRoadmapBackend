@@ -6,7 +6,6 @@ import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
 import ru.boringowl.myroadmap.application.services.RouteService
 import ru.boringowl.myroadmap.domain.Route
-import java.util.*
 
 @RestController
 @RequestMapping("api/route")

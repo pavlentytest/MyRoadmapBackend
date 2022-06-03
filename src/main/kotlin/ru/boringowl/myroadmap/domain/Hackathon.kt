@@ -1,9 +1,8 @@
 package ru.boringowl.myroadmap.domain
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
 import java.util.*
-
-import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Hackathon {

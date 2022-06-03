@@ -1,10 +1,8 @@
 package ru.boringowl.myroadmap.domain
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties
-import java.util.*
-
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import java.util.*
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class SkillTodo {
