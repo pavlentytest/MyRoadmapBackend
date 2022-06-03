@@ -1,6 +1,8 @@
 package ru.boringowl.myroadmap.application.controllers
 
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import ru.boringowl.myroadmap.infrastructure.schedulers.HackathonScheduler
 import ru.boringowl.myroadmap.infrastructure.schedulers.RoutesScheduler
 import ru.boringowl.myroadmap.infrastructure.schedulers.SkillsScheduler

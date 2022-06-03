@@ -6,12 +6,12 @@ import org.springframework.web.server.ResponseStatusException
 
 object ExcepUtils {
 
-    val notFound = ResponseStatusException(HttpStatus.NOT_FOUND, "Not found")
-    val forbidden = ResponseStatusException(HttpStatus.FORBIDDEN, "No access")
-    val unauthorized = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Token is not passed or is not valid")
-    val exists = ResponseStatusException(HttpStatus.BAD_REQUEST, "Record with this id already exists")
-    val userExists = ResponseStatusException(HttpStatus.BAD_REQUEST, "User with that username already exists")
-
+    val invalidCreds = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Неверные имя пользователя или пароль")
+    val notFound = ResponseStatusException(HttpStatus.NOT_FOUND, "Запись не найдена")
+    val forbidden = ResponseStatusException(HttpStatus.FORBIDDEN, "Нет доступа")
+    val unauthorized = ResponseStatusException(HttpStatus.UNAUTHORIZED, "Токен не валиден")
+    val exists = ResponseStatusException(HttpStatus.BAD_REQUEST, "Запись с таким id уже присутствует")
+    fun custom(message: String) = ResponseStatusException(HttpStatus.BAD_REQUEST, message)
 }
 
 class ExcepResponse(val status: HttpStatus, val message: String) {

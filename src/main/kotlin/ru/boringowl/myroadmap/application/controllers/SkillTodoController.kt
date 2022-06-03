@@ -60,15 +60,15 @@ class SkillTodoController(val service: SkillTodoService) {
     }
 
 
-    @GetMapping
-    fun get(): ListResponse<SkillTodo> =
-        ListResponse(service.get())
+    @GetMapping("/todo/{todoId}")
+    fun getByTodo(@PathVariable todoId: UUID,
+    ): ListResponse<SkillTodo> =
+        ListResponse(service.getByTodo(todoId))
 
-    @GetMapping("/{skillId}/{todoId}")
+    @GetMapping("/{skillTodoId}")
     fun get(
-        @PathVariable skillId: UUID,
-        @PathVariable todoId: UUID
+        @PathVariable skillTodoId: UUID,
     ): SkillTodo =
-        service.get(skillId, todoId) ?: throw ExcepUtils.notFound
+        service.get(skillTodoId) ?: throw ExcepUtils.notFound
 
 }

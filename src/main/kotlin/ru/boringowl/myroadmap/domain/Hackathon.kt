@@ -1,9 +1,8 @@
 package ru.boringowl.myroadmap.domain
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.time.LocalDateTime
 import java.util.*
-
-import com.fasterxml.jackson.annotation.JsonInclude
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 class Hackathon {
@@ -20,4 +19,19 @@ class Hackathon {
     var terms: String? = ""
     var organization: String? = ""
     var imageUrl: String? = ""
+
+    fun fullText(): String =
+        listOf(hackTitle,
+            hackDescription,
+            date,
+            registration,
+            focus,
+            prize,
+            routes,
+            terms,
+            organization,
+            imageUrl,
+        ).joinToString(" ").lowercase()
+
+    fun containsText(query: String) = fullText().contains(query.lowercase())
 }

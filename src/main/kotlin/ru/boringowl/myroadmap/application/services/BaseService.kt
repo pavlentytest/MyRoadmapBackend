@@ -1,10 +1,14 @@
 package ru.boringowl.myroadmap.application.services
 
-import org.springframework.data.repository.CrudRepository
+import org.springframework.data.domain.Page
+import org.springframework.data.domain.Pageable
+import org.springframework.data.jpa.repository.JpaRepository
 
-abstract class  BaseService<D : Any, E : Any, ID : Any>(val repo: CrudRepository<E, ID>) {
+abstract class  BaseService<D : Any, E : Any, ID : Any>(val repo: JpaRepository<E, ID>) {
     open fun get(): List<D> =
         repo.findAll().toList().map { toDto(it)!! }
+    open fun get(pageable: Pageable): Page<D> =
+        repo.findAll(pageable).map { toDto(it)!! }
 
     open fun get(id: ID): D? =
         toDto(repo.findById(id).orElse(null))

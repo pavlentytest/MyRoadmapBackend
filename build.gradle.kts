@@ -38,6 +38,7 @@ dependencies {
 	implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
 	implementation("org.jsoup:jsoup:1.10.3")
 	implementation("com.google.code.gson:gson:2.8.8")
+	runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")

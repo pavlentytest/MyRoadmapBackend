@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service
 import ru.boringowl.myroadmap.application.persistence.RouteRepo
 import ru.boringowl.myroadmap.domain.Route
 import ru.boringowl.myroadmap.infrastructure.jpa.JpaRoute
-import java.util.*
 
 @Service
 class RouteService(val routeRepo: RouteRepo) : BaseService<Route, JpaRoute, Int>(routeRepo) {

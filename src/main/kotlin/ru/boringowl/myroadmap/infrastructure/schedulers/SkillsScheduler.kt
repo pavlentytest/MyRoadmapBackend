@@ -10,9 +10,9 @@ import ru.boringowl.myroadmap.application.services.RouteService
 import ru.boringowl.myroadmap.application.services.SkillService
 import ru.boringowl.myroadmap.domain.Skill
 import ru.boringowl.myroadmap.infrastructure.config.AppCoroutineScope
-import ru.boringowl.myroadmap.infrastructure.utils.Constants
 import ru.boringowl.myroadmap.infrastructure.parsing.Vacancy
 import ru.boringowl.myroadmap.infrastructure.parsing.VacancyResponse
+import ru.boringowl.myroadmap.infrastructure.utils.Constants
 import ru.boringowl.myroadmap.infrastructure.utils.getMostSimilar
 import kotlin.math.roundToInt
 
@@ -77,13 +77,14 @@ class SkillsScheduler(val routeService: RouteService,
                 res[it.key] = it.value
         }
         val average = skills.map { it.value }.average()
-        return res
+        val a = res
             .toList()
             .filter { (_, v) -> v > 1 }
-            .sortedBy { (k, v) -> v }
+            .sortedBy { (_, v) -> v }
             .map { (k, v) -> Pair(k, (v.toDouble()/average*10).roundToInt()) }
             .reversed()
             .toMap()
+        return a
     }
 
     private fun getVacancySkills(id: String): List<String> {

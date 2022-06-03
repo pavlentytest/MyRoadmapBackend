@@ -1,7 +1,5 @@
 package ru.boringowl.myroadmap.domain
 
-import java.util.*
-
 
 import com.fasterxml.jackson.annotation.JsonInclude
 
