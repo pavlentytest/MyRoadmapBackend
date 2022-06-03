@@ -1,13 +1,12 @@
 package ru.boringowl.myroadmap.application.services
 
-import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Service
-import ru.boringowl.myroadmap.application.persistence.*
-import ru.boringowl.myroadmap.domain.Post
-import ru.boringowl.myroadmap.domain.Route
+import ru.boringowl.myroadmap.application.persistence.SkillRepo
+import ru.boringowl.myroadmap.application.persistence.SkillTodoRepo
+import ru.boringowl.myroadmap.application.persistence.TodoRepo
 import ru.boringowl.myroadmap.domain.SkillTodo
-import ru.boringowl.myroadmap.domain.User
-import ru.boringowl.myroadmap.infrastructure.jpa.*
+import ru.boringowl.myroadmap.domain.Todo
+import ru.boringowl.myroadmap.infrastructure.jpa.JpaSkillTodo
 import java.util.*
 
 @Service
@@ -15,32 +14,25 @@ class SkillTodoService(
     val skillTodoRepo: SkillTodoRepo,
     val skillRepo: SkillRepo,
     val todoRepo: TodoRepo,
-) : BaseService<SkillTodo, JpaSkillTodo, JpaSkillTodoId>(skillTodoRepo) {
+) : BaseService<SkillTodo, JpaSkillTodo, UUID>(skillTodoRepo) {
     override fun toJpa(dto: SkillTodo): JpaSkillTodo? = JpaSkillTodo(dto)
     override fun toDto(jpa: JpaSkillTodo?): SkillTodo? = jpa?.toSkillTodo()
-    override fun getId(dto: SkillTodo): JpaSkillTodoId? =
-        JpaSkillTodoId().apply {
-            skill = dto.skill?.let { JpaSkill(it) }
-            todo = dto.todo?.let { JpaTodo(it) }
-        }
-    fun get(skillId: UUID, todoId: UUID) : SkillTodo? {
-        val s = skillRepo.findById(skillId)
-        val t = todoRepo.findById(todoId)
-        require(s.isPresent && t.isPresent) { "Запись не найдена" }
-        val st = JpaSkillTodoId().apply {
-            skill = s.get()
-            todo = t.get()
-        }
-        return skillTodoRepo.findById(st).orElse(null)?.toSkillTodo()
+    override fun getId(dto: SkillTodo): UUID? = dto.skillTodoId
+
+    override fun update(dto: SkillTodo): SkillTodo? {
+        val todoId = skillTodoRepo.findById(dto.skillTodoId!!).get().todo?.todoId
+        dto.apply { todo = Todo().also { it.todoId = todoId } }
+        return super.update(dto)
     }
-    fun delete(skillId: UUID, todoId: UUID) {
-        val s = skillRepo.findById(skillId)
-        val t = todoRepo.findById(todoId)
-        require(s.isPresent && t.isPresent) { "Данные не валидны" }
-        val st = JpaSkillTodoId().apply {
-            skill = s.get()
-            todo = t.get()
-        }
-        skillTodoRepo.deleteById(st)
+
+    fun getByTodo(todoId: UUID) : List<SkillTodo> {
+        return skillTodoRepo.findAllByTodo_TodoId(todoId).map {it.toSkillTodo()}
     }
+
+    fun update(id: UUID, progress: Int): SkillTodo? {
+        val st = skillTodoRepo.findById(id).orElse(null)
+        st.progress = progress
+        return toDto(skillTodoRepo.save(st))
+    }
+
 }

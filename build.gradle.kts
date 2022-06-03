@@ -22,6 +22,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter-mail:2.2.4.RELEASE")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	runtimeOnly("org.postgresql:postgresql")
@@ -30,9 +31,14 @@ dependencies {
 	implementation("javax.validation:validation-api:2.0.1.Final")
 	implementation("org.bouncycastle:bcprov-jdk15on:1.70")
 	implementation("org.hibernate.validator:hibernate-validator:7.0.1.Final")
-
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.1")
+
+	implementation("com.github.kittinunf.fuel:fuel:2.3.1")
+	implementation("com.github.kittinunf.fuel:fuel-gson:2.3.1")
+	implementation("org.jsoup:jsoup:1.10.3")
+	implementation("com.google.code.gson:gson:2.8.8")
+	runtimeOnly("org.jetbrains.kotlinx:kotlinx-serialization-core:1.0.0-RC")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
@@ -47,4 +53,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.getByName<Jar>("jar") {
+	enabled = false
 }

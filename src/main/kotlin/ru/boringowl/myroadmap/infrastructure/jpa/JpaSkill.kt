@@ -1,6 +1,5 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import ru.boringowl.myroadmap.domain.Route
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*
 import javax.persistence.*
@@ -16,6 +15,9 @@ class JpaSkill() {
     @Column(name = "skill_name")
     var skillName: String = ""
 
+    @Column(name = "necessity")
+    var necessity: Int = 0
+
     @ManyToOne
     var route: JpaRoute? = null
 
@@ -24,12 +26,14 @@ class JpaSkill() {
     constructor(skill: Skill) : this() {
         skillId = skill.skillId
         skillName = skill.skillName
+        necessity = skill.necessity
         route = skill.route?.let { JpaRoute(it) }
     }
 
-    fun toSkill() = Skill().also {
+    fun toSkill(short: Boolean = false) = Skill().also {
         it.skillId = skillId
         it.skillName = skillName
-        it.route = route?.toRoute()
+        it.necessity = necessity
+        if (!short) it.route = route?.toRoute()
     }
 }

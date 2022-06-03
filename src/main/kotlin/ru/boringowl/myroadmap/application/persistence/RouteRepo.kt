@@ -1,8 +1,6 @@
 package ru.boringowl.myroadmap.application.persistence
 
-import org.springframework.data.repository.CrudRepository
-import ru.boringowl.myroadmap.infrastructure.jpa.JpaPost
+import org.springframework.data.jpa.repository.JpaRepository
 import ru.boringowl.myroadmap.infrastructure.jpa.JpaRoute
-import java.util.*
 
-interface RouteRepo : CrudRepository<JpaRoute, UUID>
+interface RouteRepo : JpaRepository<JpaRoute, Int>

@@ -6,7 +6,6 @@ import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
 import ru.boringowl.myroadmap.application.services.RouteService
 import ru.boringowl.myroadmap.domain.Route
-import java.util.*
 
 @RestController
 @RequestMapping("api/route")
@@ -36,9 +35,9 @@ class RouteController(val service: RouteService) {
 
     }
     @DeleteMapping("/{id}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
-        @PathVariable id: UUID
+        @PathVariable id: Int
     ): ResponseEntity<String> {
         try {
             service.delete(id)
@@ -54,7 +53,7 @@ class RouteController(val service: RouteService) {
         ListResponse(service.get())
 
     @GetMapping("/{id}")
-    fun get(@PathVariable id: UUID): Route =
+    fun get(@PathVariable id: Int): Route =
         service.get(id) ?: throw ExcepUtils.notFound
 
 }

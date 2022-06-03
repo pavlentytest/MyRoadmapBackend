@@ -1,8 +1,6 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import ru.boringowl.myroadmap.domain.Post
 import ru.boringowl.myroadmap.domain.Route
-import java.util.*
 import javax.persistence.*
 
 @Entity
@@ -11,7 +9,7 @@ class JpaRoute() {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "route_id")
-    var routeId: UUID? = null
+    var routeId: Int? = null
 
     @Column(name = "route_name")
     var routeName: String = ""

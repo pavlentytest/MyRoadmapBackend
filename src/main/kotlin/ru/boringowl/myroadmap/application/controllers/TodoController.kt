@@ -6,21 +6,26 @@ import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
 import ru.boringowl.myroadmap.application.services.TodoService
 import ru.boringowl.myroadmap.domain.Todo
+import ru.boringowl.myroadmap.infrastructure.security.JwtUtils
 import java.util.*
 
 @RestController
 @RequestMapping("api/todo")
-class TodoController(val service: TodoService) {
+class TodoController(val service: TodoService, val jwtUtils: JwtUtils) {
 
-    @PostMapping
+    @PostMapping("/{id}")
     fun add(
         @RequestHeader("Authorization") token: String,
-        @RequestBody dto: Todo
+        @PathVariable id: Int,
+        @RequestParam name: String,
     ): Todo? {
         try {
-            return service.add(dto)
+            val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+             return service.addByRoute(id, name, username)
+        } catch (e: IllegalArgumentException) {
+            throw ExcepUtils.custom(e.message!!)
         } catch (e: Exception) {
-            throw ExcepUtils.exists
+            throw ExcepUtils.unauthorized
         }
     }
     @RequestMapping( method = [RequestMethod.PATCH, RequestMethod.PUT])
@@ -36,7 +41,7 @@ class TodoController(val service: TodoService) {
 
     }
     @DeleteMapping("/{id}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: UUID
     ): ResponseEntity<String> {
@@ -50,8 +55,10 @@ class TodoController(val service: TodoService) {
 
 
     @GetMapping
-    fun get(): ListResponse<Todo> =
-        ListResponse(service.get())
+    fun get(@RequestHeader("Authorization") token: String): ListResponse<Todo> {
+        val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
+        return ListResponse(service.get(username))
+    }
 
     @GetMapping("/{id}")
     fun get(@PathVariable id: UUID): Todo =

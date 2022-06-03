@@ -1,8 +1,5 @@
 package ru.boringowl.myroadmap.infrastructure.jpa
 
-import javax.persistence.Entity
-import javax.persistence.Table
-
 import org.hibernate.annotations.NaturalId
 import ru.boringowl.myroadmap.domain.User
 import ru.boringowl.myroadmap.domain.UserRole
@@ -36,5 +33,5 @@ class JpaUser() {
         role = user.role
     }
 
-    fun toUser() = User(userId, username, email, role, password)
+    fun toUser() = User(userId, username, email, role)
 }

@@ -34,14 +34,25 @@ class SkillTodoController(val service: SkillTodoService) {
             throw ExcepUtils.notFound
         }
     }
-    @DeleteMapping("/{skillId}/{todoId}")
-    fun deletePattern(
+    @RequestMapping(path= ["/progress/{id}"], method = [RequestMethod.PATCH, RequestMethod.PUT])
+    fun setState(
         @RequestHeader("Authorization") token: String,
-        @PathVariable skillId: UUID,
-        @PathVariable todoId: UUID
+        @PathVariable id: UUID,
+        @RequestParam progress: Int
+    ): SkillTodo? {
+        try {
+            return service.update(id, progress)
+        } catch (e: Exception) {
+            throw ExcepUtils.notFound
+        }
+    }
+    @DeleteMapping("/{id}")
+    fun delete(
+        @RequestHeader("Authorization") token: String,
+        @PathVariable id: UUID
     ): ResponseEntity<String> {
         try {
-            service.delete(skillId, todoId)
+            service.delete(id)
             return ResponseEntity.ok("Запись удалена")
         } catch (e: Exception) {
             throw ExcepUtils.notFound
@@ -49,15 +60,15 @@ class SkillTodoController(val service: SkillTodoService) {
     }
 
 
-    @GetMapping
-    fun get(): ListResponse<SkillTodo> =
-        ListResponse(service.get())
+    @GetMapping("/todo/{todoId}")
+    fun getByTodo(@PathVariable todoId: UUID,
+    ): ListResponse<SkillTodo> =
+        ListResponse(service.getByTodo(todoId))
 
-    @GetMapping("/{skillId}/{todoId}")
+    @GetMapping("/{skillTodoId}")
     fun get(
-        @PathVariable skillId: UUID,
-        @PathVariable todoId: UUID
+        @PathVariable skillTodoId: UUID,
     ): SkillTodo =
-        service.get(skillId, todoId) ?: throw ExcepUtils.notFound
+        service.get(skillTodoId) ?: throw ExcepUtils.notFound
 
 }

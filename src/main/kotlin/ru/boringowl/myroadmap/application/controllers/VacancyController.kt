@@ -35,7 +35,7 @@ class VacancyController(val service: VacancyService) {
 
     }
     @DeleteMapping("/{id}")
-    fun deletePattern(
+    fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: Int
     ): ResponseEntity<String> {

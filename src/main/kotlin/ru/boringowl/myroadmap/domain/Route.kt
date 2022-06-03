@@ -1,13 +1,10 @@
 package ru.boringowl.myroadmap.domain
 
-import java.util.*
 
+import com.fasterxml.jackson.annotation.JsonInclude
 
-class Route {
-    var routeId: UUID? = null
-    var routeName: String = ""
-    var routeDescription: String = ""
+@JsonInclude(JsonInclude.Include.NON_NULL)
+class Route(var routeId: Int? = null, var routeName: String = "", var routeDescription: String = "") {
     var resumesCount: Int = 0
     var vacanciesCount: Int = 0
-
 }
