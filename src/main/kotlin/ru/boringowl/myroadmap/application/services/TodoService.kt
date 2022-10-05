@@ -31,6 +31,6 @@ class TodoService(val todoRepo: TodoRepo,  val skillService: SkillService, val u
     fun get(username: String): List<Todo> {
         val userId = userService.get(username).id
         require(userId != null) { "Пользователь не существует" }
-        return todoRepo.findAllByUser_UserId(userId).map { it.toTodo(false) }
+        return todoRepo.findAllByUser_Id(userId).map { it.toTodo(false) }
     }
 }

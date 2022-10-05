@@ -5,6 +5,6 @@ import ru.boringowl.myroadmap.infrastructure.jpa.JpaTodo
 import java.util.*
 
 interface TodoRepo : JpaRepository<JpaTodo, UUID> {
-    fun findAllByUser_UserId(userId: UUID): List<JpaTodo>
+    fun findAllByUser_Id(userId: UUID): List<JpaTodo>
 }
 
