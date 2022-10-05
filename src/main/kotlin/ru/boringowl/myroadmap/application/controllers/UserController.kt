@@ -82,7 +82,7 @@ class UserController(
     fun updatePassword(
         @RequestHeader("Authorization") token: String,
         @RequestBody userData: RestorePasswordData,
-    ): ResponseEntity<StringResponse> {
+    ): UserTokenData {
         try {
             val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
             val password = userData.oldPassword
@@ -91,8 +91,8 @@ class UserController(
             userDetailsService.loadUserByUsername(username)
             val userId = userService.get(username).id
             require(userId != null) {"Пользователь не найден"}
-            userService.updatePassword(userId, userData)
-            return ResponseEntity.ok(StringResponse("Пароль изменен"))
+            val data = userService.updatePassword(userId, userData)
+            return auth(data)
         } catch (e: IllegalArgumentException) {
             throw ExcepUtils.custom(e.message!!)
         }

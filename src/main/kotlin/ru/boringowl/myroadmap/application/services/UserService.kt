@@ -2,6 +2,7 @@ package ru.boringowl.myroadmap.application.services
 
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import ru.boringowl.myroadmap.application.dto.LoginData
 import ru.boringowl.myroadmap.application.dto.RegisterData
 import ru.boringowl.myroadmap.application.dto.RestorePasswordData
 import ru.boringowl.myroadmap.application.dto.UserData
@@ -36,9 +37,10 @@ class UserService(
         return userRepo.save(user).toUser()
     }
 
-    fun updatePassword(id: UUID, data: RestorePasswordData) {
+    fun updatePassword(id: UUID, data: RestorePasswordData): LoginData {
         val user: JpaUser? = userRepo.findById(id).orElse(null)
         setUserPassword(id, data.newPassword)
+        return LoginData(user!!.username, data.newPassword)
     }
 
     fun update(id: UUID, data: UserData) : User {
