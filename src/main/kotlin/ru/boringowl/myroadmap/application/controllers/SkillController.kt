@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
+import ru.boringowl.myroadmap.application.dto.StringResponse
 import ru.boringowl.myroadmap.application.services.SkillService
 import ru.boringowl.myroadmap.domain.Skill
 import java.util.*
@@ -39,10 +40,10 @@ class SkillController(val service: SkillService) {
     fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: UUID
-    ): ResponseEntity<String> {
+    ): ResponseEntity<StringResponse> {
         try {
             service.delete(id)
-            return ResponseEntity.ok("Запись удалена")
+            return ResponseEntity.ok(StringResponse("Запись удалена"))
         } catch (e: Exception) {
             throw ExcepUtils.notFound
         }

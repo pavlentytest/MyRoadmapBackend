@@ -59,7 +59,7 @@ class UserController(
     @PostMapping("resetPassword")
     fun resetPassword(
         @RequestBody userData: ResetPasswordData,
-    ): ResponseEntity<String> {
+    ): ResponseEntity<StringResponse> {
         try {
             val user = userService.get(userData.username)
             require(user.email == userData.email) {"Почта и имя пользователя не совпадают"}
@@ -72,7 +72,7 @@ class UserController(
                     "Установлен пароль: $newPass\nВам необходимо зайти и поменять его в профиле."
                 )
             )
-            return ResponseEntity.ok("Запрос отправлен на почту")
+            return ResponseEntity.ok(StringResponse("Запрос отправлен на почту"))
         } catch (e: IllegalArgumentException) {
             throw ExcepUtils.custom(e.message!!)
         }
@@ -82,7 +82,7 @@ class UserController(
     fun updatePassword(
         @RequestHeader("Authorization") token: String,
         @RequestBody userData: RestorePasswordData,
-    ): ResponseEntity<String> {
+    ): ResponseEntity<StringResponse> {
         try {
             val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
             val password = userData.oldPassword
@@ -92,7 +92,7 @@ class UserController(
             val userId = userService.get(username).id
             require(userId != null) {"Пользователь не найден"}
             userService.updatePassword(userId, userData)
-            return ResponseEntity.ok("Пароль изменен")
+            return ResponseEntity.ok(StringResponse("Пароль изменен"))
         } catch (e: IllegalArgumentException) {
             throw ExcepUtils.custom(e.message!!)
         }

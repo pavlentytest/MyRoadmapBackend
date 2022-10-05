@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import ru.boringowl.myroadmap.application.dto.ExcepUtils
 import ru.boringowl.myroadmap.application.dto.ListResponse
+import ru.boringowl.myroadmap.application.dto.StringResponse
 import ru.boringowl.myroadmap.application.services.VacancyService
 import ru.boringowl.myroadmap.domain.Vacancy
 
@@ -38,10 +39,10 @@ class VacancyController(val service: VacancyService) {
     fun delete(
         @RequestHeader("Authorization") token: String,
         @PathVariable id: Int
-    ): ResponseEntity<String> {
+    ): ResponseEntity<StringResponse> {
         try {
             service.delete(id)
-            return ResponseEntity.ok("Запись удалена")
+            return ResponseEntity.ok(StringResponse("Запись удалена"))
         } catch (e: Exception) {
             throw ExcepUtils.notFound
         }
