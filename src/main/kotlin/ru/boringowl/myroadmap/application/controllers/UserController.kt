@@ -64,7 +64,7 @@ class UserController(
             val user = userService.get(userData.username)
             require(user.email == userData.email) {"Почта и имя пользователя не совпадают"}
             val newPass = getRandPassword(14)
-            userService.setUserPassword(user.userId!!, newPass)
+            userService.setUserPassword(user.id!!, newPass)
             mailService.send(
                 EmailRequest(
                     user.email,
@@ -89,7 +89,7 @@ class UserController(
             val authentication = UsernamePasswordAuthenticationToken(username, password)
             authenticationManager.authenticate(authentication)
             userDetailsService.loadUserByUsername(username)
-            val userId = userService.get(username).userId
+            val userId = userService.get(username).id
             require(userId != null) {"Пользователь не найден"}
             userService.updatePassword(userId, userData)
             return ResponseEntity.ok("Пароль изменен")
@@ -101,12 +101,12 @@ class UserController(
     @PutMapping
     fun update(
         @RequestHeader("Authorization") token: String,
-        @RequestBody userData: UserEmailData,
+        @RequestBody userData: UserData,
     ): User {
         try {
             val username = jwtUtils.extractUsername(token.removePrefix("Bearer "))
             val user = userService.get(username)
-            return userService.update(user.userId!!, userData)
+            return userService.update(user.id!!, userData)
         } catch (e: IllegalArgumentException) {
             throw ExcepUtils.custom(e.message!!)
         }
