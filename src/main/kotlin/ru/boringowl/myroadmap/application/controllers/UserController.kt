@@ -95,6 +95,8 @@ class UserController(
             return auth(data)
         } catch (e: IllegalArgumentException) {
             throw ExcepUtils.custom(e.message!!)
+        } catch (e: Exception) {
+            throw ExcepUtils.custom("Неверный пароль")
         }
     }
 
